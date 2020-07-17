@@ -1,0 +1,51 @@
+{
+  "id": "1951243",
+  "name": "myiconfont",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3862627",
+      "name": "咖啡",
+      "font_class": "kafei",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "3862643",
+      "name": "稿件",
+      "font_class": "gaojian",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "3862713",
+      "name": "反馈",
+      "font_class": "fankui",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "3862854",
+      "name": "记录",
+      "font_class": "tubiaozhizuomobandefuben-",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "3864174",
+      "name": "电脑",
+      "font_class": "diannao-",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "3866258",
+      "name": "行情",
+      "font_class": "hangqing-copy",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    }
+  ]
+}
