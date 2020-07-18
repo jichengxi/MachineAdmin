@@ -6,8 +6,6 @@ import store from './store'
 // 引入element ui
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-// 引入自定义iconfonts
-import '@/assets/fonts/iconfont.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
