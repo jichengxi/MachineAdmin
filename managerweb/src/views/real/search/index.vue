@@ -1,5 +1,5 @@
 <template>
-  <el-table ref="table" v-loading="tableLoading" :data="tableData" border style="width: 100%">
+  <el-table ref="table" v-loading="tableLoading" :data="tableData" border style="width: 100%" :row-class-name="tableRowClassName">
     <el-table-column align="center" prop="site" label="服务器位置" width="240" />
     <el-table-column align="center" prop="hostname" label="主机名" width="170" />
     <el-table-column align="center" prop="prodip" label="业务网IP" width="120" />
@@ -11,14 +11,12 @@
     <el-table-column align="center" prop="use" label="用途" width="200" />
     <el-table-column align="center" label="操作" width="300">
       <template slot-scope="props">
-        <el-dropdown @command="handleAddColor">
-          <el-button size="mini" type="primary" plain style="background-color: #E67FEF;">
-            标记<i class="el-icon-arrow-down" />
-          </el-button>
+        <el-dropdown style="margin-right: 10px;" @command="handleAddColor">
+          <el-button size="mini" type="primary" plain style="background-color: #CBF4B4;">标记</el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item style="background-color: #67C23A" command=props.$index>正常</el-dropdown-item>
-            <el-dropdown-item style="background-color: #E6A23C" command="b">异常</el-dropdown-item>
-            <el-dropdown-item style="background-color: #F56C6C" command="c">故障</el-dropdown-item>
+            <el-dropdown-item style="background-color: #67C23A" :command="handleAddColorItem('normal', props.$index)">正常</el-dropdown-item>
+            <el-dropdown-item style="background-color: #E6A23C" :command="handleAddColorItem('warning', props.$index)">异常</el-dropdown-item>
+            <el-dropdown-item style="background-color: #F56C6C" :command="handleAddColorItem('danger', props.$index)">故障</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-button size="mini" type="primary" plain @click="handleCheck(props.$index, props.row)">查看</el-button>
@@ -99,7 +97,9 @@ export default {
       tableData: [],
       tableLoading: true,
       currentRowIndex: null,
-      currentRow: null
+      currentRow: null,
+      currentStatus: true,
+      colorItemStatus: ''
     }
   },
   mounted() {
@@ -116,21 +116,53 @@ export default {
   methods: {
     // 按钮设置底色
     handleAddColor(command) {
-      console.log(command)
+      this.colorItemStatus = command
+    },
+    handleAddColorItem(status, index) {
+      return [status, index]
+    },
+    tableRowClassName({ row, rowIndex }) {
+      console.log(this.colorItemStatus)
+      if (rowIndex === this.colorItemStatus[1]) {
+        if (this.this.colorItemStatus[0] === 'normal') {
+          return 'warning-row'
+        } else if (this.this.colorItemStatus[0] === 'warning') {
+          return 'success-row'
+        } else if (this.this.colorItemStatus[0] === 'danger') {
+          return 'success-row'
+        }
+      }
+      return ''
     },
     // 查看选项自动开闭合
     handleCheck(index, row) {
-      // console.log(index)
       const $table = this.$refs.table
-      if (this.currentRow) {
+      if (this.currentRow === row) {
+        this.currentStatus = !this.currentStatus
+        this.currentRow = row
+        $table.toggleRowExpansion(this.currentRow, this.currentStatus)
+        this.$nextTick(() => {
+          this.currentRowIndex = index
+        })
+      } else if (this.currentRow) {
         // 这时候的 currentRow 是上一次点击的那一行
-        $table.toggleRowExpansion(this.currentRow, false)
+        if (this.currentStatus) {
+          $table.toggleRowExpansion(this.currentRow, false)
+        } else {
+          this.currentStatus = !this.currentStatus
+        }
+        this.currentRow = row
+        $table.toggleRowExpansion(this.currentRow, this.currentStatus)
+        this.$nextTick(() => {
+          this.currentRowIndex = index
+        })
+      } else {
+        this.currentRow = row
+        $table.toggleRowExpansion(this.currentRow, this.currentStatus)
+        this.$nextTick(() => {
+          this.currentRowIndex = index
+        })
       }
-      this.currentRow = row
-      $table.toggleRowExpansion(this.currentRow)
-      this.$nextTick(() => {
-        this.currentRowIndex = index
-      })
     },
     handleEdit(index, row) {
       console.log(index, row)
@@ -158,14 +190,27 @@ export default {
     margin-left: 15px;
   }
   .el-icon-arrow-down {
-    font-size: 12px;
+    font-size: 10px;
   }
 
   .el-table__expand-column .cell {
     display: none;
   }
 
-  .el-dropdown-menu{
+  .el-dropdown-menu {
     padding: 0px;
+  }
+
+  .el-dropdown-menu__item{
+    border: 1px solid;
+    font-size: 12px;
+    border-radius: 3px;
+    width: 54px;
+    height: 26px;
+    padding: 7px 15px;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+    transition: .1s;
   }
 </style>
