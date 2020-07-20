@@ -122,17 +122,16 @@ export default {
       return [status, index]
     },
     tableRowClassName({ row, rowIndex }) {
-      console.log(this.colorItemStatus)
+      // console.log(this.colorItemStatus)
       if (rowIndex === this.colorItemStatus[1]) {
-        if (this.this.colorItemStatus[0] === 'normal') {
+        if (this.colorItemStatus[0] === 'normal') {
           return 'warning-row'
-        } else if (this.this.colorItemStatus[0] === 'warning') {
+        } else if (this.colorItemStatus[0] === 'warning') {
           return 'success-row'
-        } else if (this.this.colorItemStatus[0] === 'danger') {
+        } else if (this.colorItemStatus[0] === 'danger') {
           return 'success-row'
         }
       }
-      return ''
     },
     // 查看选项自动开闭合
     handleCheck(index, row) {
