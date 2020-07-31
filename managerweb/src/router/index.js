@@ -78,6 +78,34 @@ export const constantRoutes = [
   },
 
   {
+    path: '/virtual',
+    component: Layout,
+    redirect: '/virtual/search',
+    name: 'search',
+    meta: { title: '虚拟机', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'search',
+        name: 'search',
+        component: () => import('@/views/virtual/search'),
+        meta: { title: '查询', icon: 'el-icon-notebook-1' }
+      },
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/virtual/add'),
+        meta: { title: '新增', icon: 'el-icon-notebook-1' }
+      },
+      {
+        path: 'real',
+        name: 'real',
+        component: () => import('@/views/virtual/real'),
+        meta: { title: '宿主机信息', icon: 'el-icon-notebook-1' }
+      }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     children: [

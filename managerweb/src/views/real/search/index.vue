@@ -90,7 +90,6 @@
 import axios from 'axios'
 // fade/zoom 等
 import 'element-ui/lib/theme-chalk/base.css'
-
 export default {
   data() {
     return {
